@@ -19,7 +19,7 @@ h3 {
 }
 
 button {
-  margin: 5px;
+  margin: 5;
 }
 
 ul.unstyled {
@@ -44,7 +44,7 @@ nav li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 14 16;
   text-decoration: none;
 }
 
@@ -53,9 +53,9 @@ nav li a:hover {
 }
 
 nav button {
-  margin-top: 13px;
+  margin-top: 13;
 }
 
 .roundBorder fieldset {
-  border-radius: 25px;
+  border-radius: 25;
 }

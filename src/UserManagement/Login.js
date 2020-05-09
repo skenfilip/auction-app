@@ -24,7 +24,7 @@ class Login extends Component {
         <CssBaseline />
         <div
           style={{
-            marginTop: "50px",
+            marginTop: "50",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -32,7 +32,7 @@ class Login extends Component {
         >
           <Avatar
             style={{
-              margin: "1px",
+              margin: "1",
               backgroundColor: "#dc004e",
             }}
           >
@@ -41,7 +41,7 @@ class Login extends Component {
           <Typography component="h1" variant="h5" style={{ color: "black" }}>
             Log In
           </Typography>
-          <form style={{ width: "100%", marginTop: "1px" }} noValidate>
+          <form style={{ width: "100%", marginTop: "1" }} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -69,7 +69,7 @@ class Login extends Component {
               fullWidth
               variant="contained"
               color="primary"
-              style={{ margin: "3px 0px 2px" }}
+              style={{ margin: "3 0 2" }}
             >
               Log In
             </Button>

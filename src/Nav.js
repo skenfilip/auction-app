@@ -12,6 +12,7 @@ import {
   MenuItem,
   TextField,
   InputAdornment,
+  Grid,
 } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/Search";
@@ -48,8 +49,8 @@ class Nav extends Component {
         style={{
           backgroundColor: "white",
           width: "70%",
-          display: "block",
           margin: "0 auto",
+          height: "50",
         }}
       >
         <Toolbar
@@ -58,57 +59,58 @@ class Nav extends Component {
             padding: "0",
           }}
         >
-          <Link
-            underline="none"
-            to="/"
-            style={{ textDecoration: "none", height: "100px" }}
-          >
-            <img
-              src={require("./resources/logo.png")}
-              style={{ maxWidth: "100px" }}
-            />
-          </Link>
-          <Divider orientation="vertical" flexItem={true} light={true} />
-          <FormControl style={{ minWidth: "120px", marginLeft: "20px" }}>
-            <InputLabel>Categories</InputLabel>
-            <Select
-              defaultValue=""
-              value={this.state.category}
-              onChange={this.handleChange}
-            >
-              <MenuItem value="Games">Games</MenuItem>
-            </Select>
-          </FormControl>
-          <div className="roundBorder">
-            <TextField
-              label="Search..."
-              style={{ marginLeft: "50px", width: "500px" }}
-              variant="outlined"
-              InputProps={endAdornment}
-            />
-          </div>
-          <Link to="/" style={{ textDecoration: "none", marginLeft: "50px" }}>
-            <Typography style={{ color: "black" }}>Sell</Typography>
-          </Link>
-          <Link
-            to="/profile"
-            style={{ textDecoration: "none", marginLeft: "20px" }}
-          >
-            <Typography style={{ color: "black" }}>Profile</Typography>
-          </Link>
-          <Link to="/login">
-            <Button
-              variant="contained"
-              style={{
-                color: "white",
-                backgroundColor: "#1f2833",
-                marginLeft: "25px",
-                borderRadius: "20px",
-              }}
-            >
-              {isAuthenticated() ? "Log Out" : "Log In"}
-            </Button>
-          </Link>
+          <Grid container style={{ height: "inherit", width: "inherit" }}>
+            <Grid item xs>
+              <Link underline="none" to="/" style={{ textDecoration: "none" }}>
+                <img src={require("./resources/logo.png")} />
+              </Link>
+            </Grid>
+            <Divider orientation="vertical" flexItem={true} light={true} />
+            <Grid item xs>
+              <FormControl>
+                <InputLabel>Categories</InputLabel>
+                <Select
+                  defaultValue=""
+                  value={this.state.category}
+                  onChange={this.handleChange}
+                >
+                  <MenuItem value="Games">Games</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs>
+              <div className="roundBorder">
+                <TextField
+                  label="Search..."
+                  variant="outlined"
+                  InputProps={endAdornment}
+                />
+              </div>
+            </Grid>
+            <Grid item xs>
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <Typography style={{ color: "black" }}>Sell</Typography>
+              </Link>
+            </Grid>
+            <Grid item xs>
+              <Link to="/profile" style={{ textDecoration: "none" }}>
+                <Typography style={{ color: "black" }}>Profile</Typography>
+              </Link>
+            </Grid>
+            <Grid item xs>
+              <Link to="/login">
+                <Button
+                  variant="contained"
+                  style={{
+                    color: "white",
+                    backgroundColor: "#1f2833",
+                  }}
+                >
+                  {isAuthenticated() ? "Log Out" : "Log In"}
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     );

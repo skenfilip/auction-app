@@ -20,19 +20,19 @@ class Register extends Component {
         <CssBaseline />
         <div
           style={{
-            marginTop: "50px",
+            marginTop: "50",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Avatar style={{ margin: "1px", backgroundColor: "#dc004e" }}>
+          <Avatar style={{ margin: "1", backgroundColor: "#dc004e" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" style={{ color: "black" }}>
             Register
           </Typography>
-          <form style={{ width: "100%", marginTop: "3px" }} noValidate>
+          <form style={{ width: "100%", marginTop: "3" }} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -75,7 +75,7 @@ class Register extends Component {
               fullWidth
               variant="contained"
               color="primary"
-              style={{ margin: "3px 0px 2px" }}
+              style={{ margin: "3 0 2" }}
             >
               Register
             </Button>
