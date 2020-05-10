@@ -59,15 +59,30 @@ class Nav extends Component {
             padding: "0",
           }}
         >
-          <Grid container style={{ height: "inherit", width: "inherit" }}>
+          <Grid container align="center" justify="center" alignItems="center">
             <Grid item xs>
-              <Link underline="none" to="/" style={{ textDecoration: "none" }}>
-                <img src={require("./resources/logo.png")} />
+              <Link
+                underline="none"
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  width: "75px",
+                  height: "75px",
+                }}
+              >
+                <img
+                  src={require("./resources/logo.png")}
+                  style={{ width: "inherit", height: "inherit" }}
+                />
               </Link>
             </Grid>
             <Divider orientation="vertical" flexItem={true} light={true} />
             <Grid item xs>
-              <FormControl>
+              <FormControl
+                style={{
+                  width: "100px",
+                }}
+              >
                 <InputLabel>Categories</InputLabel>
                 <Select
                   defaultValue=""
@@ -79,22 +94,37 @@ class Nav extends Component {
               </FormControl>
             </Grid>
             <Grid item xs>
-              <div className="roundBorder">
+              <div className="roundBorder" style={{ width: "300px" }}>
                 <TextField
                   label="Search..."
+                  style={{ width: "inherit" }}
                   variant="outlined"
                   InputProps={endAdornment}
                 />
               </div>
             </Grid>
             <Grid item xs>
-              <Link to="/" style={{ textDecoration: "none" }}>
-                <Typography style={{ color: "black" }}>Sell</Typography>
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  width: "50px",
+                  margin: "0px",
+                }}
+              >
+                <Typography style={{ color: "black", width: "inherit" }}>
+                  Sell
+                </Typography>
               </Link>
             </Grid>
             <Grid item xs>
-              <Link to="/profile" style={{ textDecoration: "none" }}>
-                <Typography style={{ color: "black" }}>Profile</Typography>
+              <Link
+                to="/profile"
+                style={{ textDecoration: "none", width: "50px", margin: "0px" }}
+              >
+                <Typography style={{ color: "black", width: "inherit" }}>
+                  Profile
+                </Typography>
               </Link>
             </Grid>
             <Grid item xs>
@@ -104,6 +134,7 @@ class Nav extends Component {
                   style={{
                     color: "white",
                     backgroundColor: "#1f2833",
+                    margin: "0px",
                   }}
                 >
                   {isAuthenticated() ? "Log Out" : "Log In"}
