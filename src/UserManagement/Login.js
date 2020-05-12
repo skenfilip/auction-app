@@ -12,12 +12,60 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import axios from "axios";
+import { connect } from "react-redux";
+import setToken from "../actions/setToken";
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
-class Login extends Component {
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+export class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      email: "",
+      password: "",
+      success: false,
+      fail: false,
+    };
   }
+  handleEmailChange = (value) => {
+    this.setState({
+      email: value,
+    });
+  };
+  handlePasswordChange = (value) => {
+    this.setState({
+      password: value,
+    });
+  };
+
+  tryLogin = () => {
+    axios
+      .post("http://localhost:8080/api/user/login", {
+        username: this.state.email,
+        password: this.state.password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          window.localStorage.setItem("token", res.data.token);
+          this.props.onChange(res.data.token);
+          console.log(this.props.token.token);
+          this.setState({
+            success: true,
+          });
+          this.props.history.push("/home");
+        }
+      })
+      .catch((error) => {
+        this.setState({
+          fail: true,
+        });
+      });
+  };
   render() {
     return (
       <Container component="main" maxWidth="xs">
@@ -52,6 +100,8 @@ class Login extends Component {
               name="email"
               autoComplete="email"
               autoFocus
+              value={this.state.email}
+              onChange={(event) => this.handleEmailChange(event.target.value)}
             />
             <TextField
               variant="outlined"
@@ -63,13 +113,17 @@ class Login extends Component {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={this.state.password}
+              onChange={(event) =>
+                this.handlePasswordChange(event.target.value)
+              }
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
               style={{ margin: "3 0 2" }}
+              onClick={this.tryLogin}
             >
               Log In
             </Button>
@@ -80,6 +134,24 @@ class Login extends Component {
                 </Link>
               </Grid>
             </Grid>
+            <Grid container>
+              <Grid item xs={12}>
+                <Snackbar
+                  open={this.state.success}
+                  autoHideDuration={6000}
+                  onClose={() => this.setState({ success: false })}
+                >
+                  <Alert severity="success">Login Successful</Alert>
+                </Snackbar>
+                <Snackbar
+                  open={this.state.fail}
+                  autoHideDuration={6000}
+                  onClose={() => this.setState({ fail: false })}
+                >
+                  <Alert severity="error">Invalid Credentials</Alert>
+                </Snackbar>
+              </Grid>
+            </Grid>
           </form>
         </div>
       </Container>
@@ -87,4 +159,18 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    token: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onChange: (value) => {
+      dispatch(setToken(value));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

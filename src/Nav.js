@@ -14,6 +14,8 @@ import {
   InputAdornment,
   Grid,
 } from "@material-ui/core";
+import { connect } from "react-redux";
+import setToken from "./actions/setToken";
 
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -31,9 +33,7 @@ class Nav extends Component {
       category: event.target.value,
     });
   };
-
   render() {
-    const { isAuthenticated, login, logout } = this.props.auth;
     const endAdornment = {
       endAdornment: (
         <Link to="/">
@@ -105,7 +105,7 @@ class Nav extends Component {
             </Grid>
             <Grid item xs>
               <Link
-                to="/"
+                to="/sell"
                 style={{
                   textDecoration: "none",
                   width: "50px",
@@ -128,18 +128,37 @@ class Nav extends Component {
               </Link>
             </Grid>
             <Grid item xs>
-              <Link to="/login">
-                <Button
-                  variant="contained"
-                  style={{
-                    color: "white",
-                    backgroundColor: "#1f2833",
-                    margin: "0px",
-                  }}
-                >
-                  {isAuthenticated() ? "Log Out" : "Log In"}
-                </Button>
-              </Link>
+              {this.props.token.token === "" ? (
+                <Link to="/login" style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="contained"
+                    style={{
+                      color: "white",
+                      backgroundColor: "#1f2833",
+                      margin: "0px",
+                    }}
+                  >
+                    LOG IN
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/" style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="contained"
+                    style={{
+                      color: "white",
+                      backgroundColor: "#1f2833",
+                      margin: "0px",
+                    }}
+                    onClick={() => {
+                      window.localStorage.removeItem("token");
+                      this.props.onChange("");
+                    }}
+                  >
+                    LOG OUT
+                  </Button>
+                </Link>
+              )}
             </Grid>
           </Grid>
         </Toolbar>
@@ -147,4 +166,19 @@ class Nav extends Component {
     );
   }
 }
-export default Nav;
+
+const mapStateToProps = (state) => {
+  return {
+    token: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onChange: (value) => {
+      dispatch(setToken(value));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

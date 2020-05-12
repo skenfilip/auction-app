@@ -5,50 +5,39 @@ import Profile from "./Profile";
 import "./App.css";
 import Navigation from "./Nav";
 import Auth from "./Auth/Auth";
-import Callback from "./Callback";
 import Login from "./UserManagement/Login.js";
 import Register from "./UserManagement/Register";
+import { PrivateRoute } from "./PrivateRoute";
+import Welcome from "./Welcome";
+import Sell from "./Sell";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.auth = new Auth(this.props.history);
   }
   render() {
     return (
       <div className="background">
-        <Navigation auth={this.auth} />
+        <Navigation />
         <div className="body">
           <Route
+            exact
             path="/"
-            exact
-            render={(props) => <Home auth={this.auth} {...props} />}
+            render={(props) => <Welcome auth={this.auth} {...props} />}
           />
           <Route
-            path="/callback"
             exact
-            render={(props) => <Callback auth={this.auth} {...props} />}
-          />
-          <Route
             path="/login"
-            exact
             render={(props) => <Login auth={this.auth} {...props} />}
           />
           <Route
-            path="/register"
             exact
+            path="/register"
             render={(props) => <Register auth={this.auth} {...props} />}
           />
-          <Route
-            path="/profile"
-            render={(props) =>
-              this.auth.isAuthenticated() ? (
-                <Profile auth={this.auth} {...props} />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          />
+          <PrivateRoute exact path="/profile" component={Profile} />
+          <PrivateRoute exact path="/home" component={Home} />
+          <PrivateRoute exact path="/sell" component={Sell} />
         </div>
       </div>
     );

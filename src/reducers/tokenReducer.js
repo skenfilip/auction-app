@@ -1,8 +1,8 @@
-export default function (state = "", action) {
-  if (action.type === "GET_TOKEN") {
-    return {
-      ...state,
-      token: action.payload,
-    };
+const tokenReducer = (state = "", action) => {
+  if (action.type === "SET_TOKEN") {
+    state = action;
   }
-}
+  return state;
+};
+
+export default tokenReducer;
