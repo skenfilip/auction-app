@@ -11,8 +11,33 @@ export default class Home extends Component {
       bids: [],
     };
   }
+
+  getItemsByCategory = () => {
+    if (window.localStorage.getItem("category") !== null) {
+      axios
+        .get(
+          "http://localhost:8080/api/item/?category=" +
+            window.localStorage.getItem("category"),
+          {
+            headers: {
+              Authorization: window.localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((res) => {
+          this.setState({
+            items: res.data,
+          });
+        });
+    }
+  };
+
   componentDidMount() {
     this.getAllItems();
+    this.interval = setInterval(this.getItemsByCategory, 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
   getAllItems = () => {
     axios

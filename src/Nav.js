@@ -16,31 +16,54 @@ import {
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import setToken from "./actions/setToken";
+import axios from "axios";
 
 import SearchIcon from "@material-ui/icons/Search";
 
 class Nav extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       category: "",
+      categories: [],
     };
+  }
+  componentWillMount() {
+    axios
+      .get("http://localhost:8080/api/category", {
+        headers: {
+          Authorization: window.localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          this.setState({
+            categories: res.data,
+          });
+        }
+      });
   }
 
   handleChange = (event) => {
-    this.setState({
-      category: event.target.value,
-    });
+    if (event.target.value === "") {
+      window.localStorage.removeItem("category");
+    } else {
+      this.setState(
+        {
+          category: event.target.value,
+        },
+        () => {
+          window.localStorage.setItem("category", this.state.category);
+        }
+      );
+    }
   };
   render() {
     const endAdornment = {
       endAdornment: (
-        <Link to="/">
-          <InputAdornment position="end">
-            <SearchIcon style={{ color: "black" }} />
-          </InputAdornment>
-        </Link>
+        <InputAdornment position="end">
+          <SearchIcon style={{ color: "black" }} />
+        </InputAdornment>
       ),
     };
     return (
@@ -63,7 +86,7 @@ class Nav extends Component {
             <Grid item xs>
               <Link
                 underline="none"
-                to="/"
+                to="/home"
                 style={{
                   textDecoration: "none",
                   width: "75px",
@@ -89,7 +112,12 @@ class Nav extends Component {
                   value={this.state.category}
                   onChange={this.handleChange}
                 >
-                  <MenuItem value="Games">Games</MenuItem>
+                  <MenuItem value="">---Select---</MenuItem>
+                  {this.state.categories.map((category) => (
+                    <MenuItem value={category.categoryName}>
+                      {category.categoryName}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
